@@ -23,11 +23,22 @@ class ViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-
+        // set initial location in Honolulu
+        let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
+        centerMapOnLocation(location: initialLocation)
+        
+        //locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        //locationManager.requestWhenInUseAuthorization()
     }
-//        let userArea : MKCoordinateRegion = MKCoordinateRegion(center: locationManager.location!.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+    
+    let regionRadius: CLLocationDistance = 1000
+    func centerMapOnLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegion(center: location.coordinate,
+                                                  latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+        mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    //    let userArea : MKCoordinateRegion = MKCoordinateRegion(center: locationManager.location!.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
         
     func searchBarSearchButtonClicked(_ searchBar : UISearchBar){
         print("Search bar clicked")
